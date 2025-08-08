@@ -29,16 +29,6 @@ export default function CompletionPage() {
                   അമൃതയ്‌ക്കൊപ്പം കരഞ്ഞും, ഊർമിള ദേവിക്കൊപ്പം ദേഷ്യപ്പെട്ടും അർജുനൊപ്പം ഞെട്ടിയും നിങ്ങൾ ചന്ദനമഴ വിജയകരമായി വായിച്ചു പൂർത്തിയാക്കിയിരിക്കുന്നു..
                 </p>
 
-                <div className="aspect-video rounded-lg overflow-hidden shadow-lg mt-6">
-                    <iframe
-                        className="w-full h-full"
-                        src="https://www.youtube.com/embed/7KL79o02HB4?end=75&autoplay=1&mute=1"
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    ></iframe>
-                </div>
-
                 <div className="pt-4">
                   <Button asChild size="lg" className="rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
                     <Link href="/">
