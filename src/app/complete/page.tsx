@@ -23,10 +23,10 @@ export default function CompletionPage() {
               </CardHeader>
               <CardContent className="space-y-6 px-8 pb-8">
                 <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
-                  You have successfully navigated the Scroll of Feelings, proving yourself a master of emotion. From a joyful beginning to a triumphant bloom, your expressions brought the story to life.
+                  നീ തങ്കപ്പനല്ലടാ, പൊന്നപ്പനാ പൊന്നപ്പൻ...
                 </p>
                 <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
-                  Thank you for playing!
+                  അമൃതയ്‌ക്കൊപ്പം കരഞ്ഞും, ഊർമിള ദേവിക്കൊപ്പം ദേഷ്യപ്പെട്ടും അർജുനൊപ്പം ഞെട്ടിയും നിങ്ങൾ ചന്ദനമഴ വിജയകരമായി വായിച്ചു പൂർത്തിയാക്കിയിരിക്കുന്നു..
                 </p>
                 <div className="pt-4">
                   <Button asChild size="lg" className="rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
