@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { handleCheckEmotion } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowRight, Loader2, VideoOff } from 'lucide-react';
+import { ArrowRight, Loader2, Video, VideoOff } from 'lucide-react';
 import EmojiRain from './emoji-rain';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -24,8 +24,13 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   useEffect(() => {
     const getCameraPermission = async () => {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        console.error('Camera not supported');
+        console.error('Camera not supported on this browser.');
         setHasCameraPermission(false);
+        toast({
+          variant: 'destructive',
+          title: 'Camera Not Supported',
+          description: 'Your browser does not support camera access.',
+        });
         return;
       }
       try {
@@ -56,7 +61,14 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   }, [toast]);
 
   const handleCheck = async () => {
-    if (!webcamRef.current || !canvasRef.current) return;
+    if (!webcamRef.current || !canvasRef.current || !webcamRef.current.srcObject) {
+        toast({
+            variant: 'destructive',
+            title: 'Camera Not Ready',
+            description: 'Please ensure camera access is enabled and try again.',
+        });
+        return;
+    }
 
     setIsChecking(true);
     setCheckResult(null);
@@ -92,20 +104,22 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   };
   
   const renderWebcamFeed = () => {
-    if (hasCameraPermission === undefined) {
-      return <div className="aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
-    }
-    
     return (
-      <div className="relative w-full aspect-video">
+      <div className="relative w-full aspect-video bg-muted rounded-lg flex items-center justify-center overflow-hidden">
         <video ref={webcamRef} autoPlay playsInline muted className="w-full h-full rounded-lg shadow-inner transform -scale-x-100 object-cover" aria-label="Webcam feed"></video>
-        { !hasCameraPermission && (
-          <div className="absolute inset-0 bg-muted rounded-lg flex flex-col items-center justify-center text-center p-4">
+        { hasCameraPermission === undefined && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-muted/80">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground mb-2" />
+            <p className="text-muted-foreground">Initializing Camera...</p>
+          </div>
+        )}
+        { hasCameraPermission === false && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-muted/80">
             <Alert variant="destructive">
               <VideoOff className="h-4 w-4" />
               <AlertTitle>Camera Access Required</AlertTitle>
               <AlertDescription>
-                Please allow camera access to use this feature. You may need to grant permission in your browser settings.
+                Please allow camera access. You may need to grant permission in your browser settings.
               </AlertDescription>
             </Alert>
           </div>
