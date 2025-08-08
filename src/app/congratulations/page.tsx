@@ -14,7 +14,7 @@ export default function CongratulationsPage() {
               Congratulations!
             </CardTitle>
             <CardDescription className="text-lg pt-2">
-              You have successfully navigated The Scroll of Feelings.
+              You have successfully navigated സ്ക്രോളിനോട് taatta..👋🏻
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">

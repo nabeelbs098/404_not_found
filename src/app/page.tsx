@@ -14,7 +14,7 @@ export default function Home() {
           <Card className="shadow-2xl bg-card/80 backdrop-blur-sm animate-fade-in-up">
             <CardHeader>
               <CardTitle className="font-headline text-5xl md:text-6xl tracking-tighter bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent pb-2">
-                The Scroll of Feelings
+                സ്ക്രോളിനോട് taatta..👋🏻
               </CardTitle>
               <CardDescription className="font-body text-lg md:text-xl text-muted-foreground pt-2">
                 An interactive tale that unfolds with your expressions.
