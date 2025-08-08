@@ -11,11 +11,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Icons, IconName } from '@/components/icons';
-import { Loader } from '@/components/ui/loader';
+import { Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { emotionIcons } from '@/lib/story';
 
 interface EmotionChallengeProps {
   emotion: (typeof EMOTIONS)[number];
@@ -26,6 +25,11 @@ export function EmotionChallenge({ emotion }: EmotionChallengeProps) {
   const { toast } = useToast();
   const webcamRef = useRef<WebcamRef>(null);
   const analysisIntervalRef = useRef<NodeJS.Timeout>();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -42,6 +46,7 @@ export function EmotionChallenge({ emotion }: EmotionChallengeProps) {
 
     setIsAnalyzing(true);
     try {
+      // Run both analysis and feedback calls in parallel
       const [feedbackRes, matchRes] = await Promise.all([
         provideEmotionFeedback({ photoDataUri: imageDataUri, targetEmotion: emotion.name }),
         analyzeEmotion({ photoDataUri: imageDataUri, targetEmotion: emotion.name }),
@@ -61,17 +66,25 @@ export function EmotionChallenge({ emotion }: EmotionChallengeProps) {
   }, [isAnalyzing, isMatch, emotion.name, toast]);
   
   useEffect(() => {
+    // Only run on the client
+    if (!isClient) return;
+
     if (!isLoading && !isMatch) {
+      // Start the interval and store its ID
       analysisIntervalRef.current = setInterval(handleAnalysis, 3000);
     }
+    
+    // Cleanup function to clear the interval
     return () => {
       if (analysisIntervalRef.current) {
         clearInterval(analysisIntervalRef.current);
       }
     };
-  }, [isLoading, isMatch, handleAnalysis]);
+  }, [isLoading, isMatch, handleAnalysis, isClient]);
   
-  const EmotionIcon = Icons[emotion.icon as IconName];
+  const EmotionIcon = emotionIcons[emotion.id as keyof typeof emotionIcons] || emotionIcons['happy'];
+
+  const nextPath = emotion.next === 'complete' ? '/complete' : `/story/${emotion.next}`;
 
   return (
     <Card className="w-full max-w-4xl bg-card/80 backdrop-blur-sm shadow-2xl animate-fade-in-up">
@@ -88,16 +101,16 @@ export function EmotionChallenge({ emotion }: EmotionChallengeProps) {
             <WebcamFeed ref={webcamRef} onLoaded={() => setIsLoading(false)} />
              <div className="h-20">
                 {isLoading ? (
-                    <div className="flex items-center justify-center text-muted-foreground"><Loader className="mr-2" />Initializing camera...</div>
+                    <div className="flex items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Initializing camera...</div>
                 ) : isMatch ? (
-                    <Alert variant="default" className="border-green-500 bg-green-500/10">
+                    <Alert variant="default" className="border-green-500 bg-green-500/10 text-green-700">
                         <CheckCircle2 className="h-4 w-4 text-green-500" />
-                        <AlertTitle className="text-green-600">Emotion Matched!</AlertTitle>
+                        <AlertTitle className="font-bold">Emotion Matched!</AlertTitle>
                         <AlertDescription>Great job! You can now proceed to the next feeling.</AlertDescription>
                     </Alert>
                 ) : (
                     <Alert>
-                        {isAnalyzing && <Loader className="absolute top-2 right-2 text-primary" />}
+                        {isAnalyzing && <Loader2 className="absolute top-2 right-2 text-primary h-4 w-4 animate-spin" />}
                         <AlertTitle>Feedback</AlertTitle>
                         <AlertDescription>{feedback?.feedbackMessage ?? "Align your face with the camera..."}</AlertDescription>
                     </Alert>
@@ -105,13 +118,13 @@ export function EmotionChallenge({ emotion }: EmotionChallengeProps) {
             </div>
              <Progress value={isMatch ? 100 : (matchResult?.matchConfidence ?? 0) * 100} className="h-2" />
         </div>
-        <div className="space-y-6">
+        <div className="space-y-6 flex flex-col justify-between h-full">
             <div className="p-6 border rounded-lg bg-background/50">
                 <p className="text-lg leading-relaxed text-foreground/80">{emotion.story}</p>
             </div>
              {isMatch && (
                 <Button asChild size="lg" className="w-full group animate-pulse">
-                    <Link href={emotion.next === 'congratulations' ? '/congratulations' : `/emotion/${emotion.next}`}>
+                    <Link href={nextPath}>
                         Scroll to the Next Feeling <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                     </Link>
                 </Button>

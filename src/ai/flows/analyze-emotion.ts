@@ -54,7 +54,7 @@ Target Emotion: {{{targetEmotion}}}
 Photo: {{media url=photoDataUri}}
 
 Set the isMatch field to true if the user is expressing the target emotion with sufficient confidence, otherwise false.  The threshold for sufficient confidence should be determined based on how reliably the AI can detect the target emotion.
-Set the matchConfidence to a value between 0 and 1 that represents the AI's confidence that the user is expressing the target emotion.`, // MUST be valid handlebars.
+Set the matchConfidence to a value between 0 and 1 that represents the AI's confidence that the user is expressing the target emotion.`,
 });
 
 const analyzeEmotionFlow = ai.defineFlow(
