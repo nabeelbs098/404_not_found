@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Smile, Frown, Annoyed, Angry, PartyPopper } from 'lucide-react';
+import { Heart, Frown, Annoyed, Angry, PartyPopper } from 'lucide-react';
 
 export type Emotion = 'happy' | 'sad' | 'surprised' | 'angry' | 'joy';
 
@@ -64,7 +64,7 @@ export const story: Record<Emotion, StoryPart> = {
 export const storyOrder: Emotion[] = ['happy', 'sad', 'surprised', 'angry', 'joy'];
 
 export const emotionIcons: Record<Emotion, LucideIcon> = {
-    happy: Smile,
+    happy: Heart,
     sad: Frown,
     surprised: Annoyed,
     angry: Angry,
