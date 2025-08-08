@@ -13,7 +13,10 @@ interface CheckEmotionResult {
 export async function handleCheckEmotion(input: CheckEmotionInput): Promise<CheckEmotionResult> {
   try {
     const result = await checkEmotion(input);
-    return result;
+    return {
+        matchesEmotion: result.matchesEmotion,
+        suggestion: result.suggestion,
+    };
   } catch (error) {
     console.error('Error checking emotion:', error);
     // In a real app, you'd want to log this error to a monitoring service.
