@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Wand } from 'lucide-react';
 import { storyOrder } from '@/lib/story';
 
 export default function Home() {
@@ -26,11 +26,17 @@ export default function Home() {
             <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
               Each part of the story requires you to mirror an emotion. Match the feeling, and the scroll will move forward. Are you ready to begin?
             </p>
-            <div className="pt-4">
+            <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <Link href={`/story/${firstEmotion}`}>
                   Start the Journey
                   <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <Link href="/mood-booster">
+                  Mood Booster
+                  <Wand className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
             </div>
