@@ -36,16 +36,20 @@ const prompt = ai.definePrompt({
   name: 'checkEmotionPrompt',
   input: {schema: CheckEmotionInputSchema},
   output: {schema: CheckEmotionOutputSchema},
-  prompt: `You are an expert in facial expressions. You will be given an image of a user's face and a target emotion.
+  prompt: `You are an expert acting coach specializing in facial expressions.
 
-You must determine if the user is expressing the target emotion in the image.
+You will be given an image of a user's face and a target emotion they are trying to perform.
 
-If their expression does NOT match the target emotion, you must provide a short, friendly, and actionable suggestion to help them adjust their face. For example, if the target is 'happy', suggest 'How about a bigger smile?'. If the target is 'angry', suggest 'Try furrowing your brow a little.'
+Analyze the user's facial expression in the image and compare it to the intended emotion.
 
-If their expression DOES match, do not provide a suggestion.
+If the expression matches the target emotion, set matchesEmotion to true.
 
-Target Emotion: {{{targetEmotion}}}
-User's Face: {{media url=photoDataUri}}
+If the expressed emotion does NOT fully match the intended one, set matchesEmotion to false and suggest a specific, short, and actionable acting adjustment to make the performance more believable. Focus on facial muscles, eyes, and mouth. For example: "For 'angry', try furrowing your brow and tightening your lips." or "To look more 'surprised', try widening your eyes."
+
+Give feedback in short, actionable tips that the performer can apply immediately.
+
+Intended Emotion: {{{targetEmotion}}}
+Performer's Face: {{media url=photoDataUri}}
 `,
 });
 
