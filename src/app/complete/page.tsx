@@ -32,7 +32,7 @@ export default function CompletionPage() {
                 <div className="aspect-video rounded-lg overflow-hidden shadow-lg mt-6">
                     <iframe
                         className="w-full h-full"
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        src="https://www.youtube.com/embed/7KL79o02HB4?end=75"
                         title="YouTube video player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
