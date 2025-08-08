@@ -123,7 +123,7 @@ export default function MoodBoosterPage() {
   }
 
   return (
-    <>
+    <div className="min-h-full w-full bg-gradient-to-br from-indigo-400/20 via-purple-400/10 to-teal-400/20">
       <div className="container mx-auto px-4 py-8 flex justify-center animate-fade-in">
         <Card className="w-full max-w-4xl mx-auto shadow-2xl bg-card/80 backdrop-blur-sm overflow-hidden">
           <div className="grid md:grid-cols-2 gap-0">
@@ -184,6 +184,6 @@ export default function MoodBoosterPage() {
         </Card>
       </div>
       <canvas ref={canvasRef} className="hidden"></canvas>
-    </>
+    </div>
   );
 }
