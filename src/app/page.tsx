@@ -8,7 +8,7 @@ export default function Home() {
   const firstEmotion = storyOrder[0];
 
   return (
-    <div className="min-h-full w-full bg-gradient-to-tr from-primary/10 via-background to-accent/20">
+    <div className="min-h-full w-full bg-gradient-to-br from-primary/10 via-background to-accent/10">
       <div className="container mx-auto px-4 py-8 sm:py-16 flex items-center justify-center min-h-full">
         <div className="w-full max-w-2xl text-center">
           <Card className="shadow-2xl bg-card/80 backdrop-blur-sm animate-fade-in-up">

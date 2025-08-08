@@ -10,11 +10,11 @@ interface StoryPageProps {
 }
 
 const emotionBackgrounds: Record<Emotion, string> = {
-  happy: 'from-yellow-400/10 via-background to-yellow-600/10',
-  angry: 'from-red-500/10 via-background to-red-700/10',
-  surprised: 'from-purple-500/10 via-background to-purple-700/10',
-  sad: 'from-blue-600/10 via-background to-blue-800/10',
-  joy: 'from-pink-400/10 via-background to-orange-400/10',
+  happy: 'from-yellow-200/20 via-background to-orange-200/20',
+  angry: 'from-red-300/20 via-background to-rose-300/20',
+  surprised: 'from-purple-300/20 via-background to-indigo-300/20',
+  sad: 'from-blue-300/20 via-background to-sky-300/20',
+  joy: 'from-pink-300/20 via-background to-violet-300/20',
 };
 
 

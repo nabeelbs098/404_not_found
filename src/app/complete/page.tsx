@@ -8,7 +8,7 @@ export default function CompletionPage() {
   return (
     <>
       <EmojiRain emoji="🎉" />
-      <div className="min-h-full w-full bg-gradient-to-br from-green-400/20 via-cyan-400/10 to-blue-500/20">
+      <div className="min-h-full w-full bg-gradient-to-br from-green-200/30 via-cyan-200/20 to-blue-300/30">
         <div className="container mx-auto px-4 py-8 sm:py-16 flex items-center justify-center min-h-full">
           <div className="w-full max-w-2xl text-center">
             <Card className="shadow-2xl bg-card/80 backdrop-blur-sm animate-fade-in-up">
