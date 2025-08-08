@@ -35,14 +35,13 @@ export async function checkEmotion(input: CheckEmotionInput): Promise<CheckEmoti
 const prompt = ai.definePrompt({
   name: 'checkEmotionPrompt',
   input: {schema: CheckEmotionInputSchema},
+  output: {schema: CheckEmotionOutputSchema},
   prompt: `You are an expert acting coach. Your task is to analyze an image of a user's face and determine if their expression matches a specific target emotion.
 
 - Analyze the user's facial expression in the image.
 - Compare it to the target emotion: **{{{targetEmotion}}}**.
-- If the expression is a clear match, respond with only the word "YES".
-- If it is not a match, respond with only "NO" and a brief, actionable tip on a new line to help them improve. For example:
-NO
-Try smiling wider.
+- Determine if the expression is a clear match for the target emotion and set the \`matchesEmotion\` field.
+- If it is not a match, provide a brief, actionable tip to help them improve in the \`suggestion\` field. If it is a match, you don't need to provide a suggestion.
 
 Target Emotion: {{{targetEmotion}}}
 Image of user: {{media url=photoDataUri}}
@@ -56,15 +55,7 @@ const checkEmotionFlow = ai.defineFlow(
     outputSchema: CheckEmotionOutputSchema,
   },
   async input => {
-    const response = await prompt(input);
-    const responseText = response.text.trim();
-    
-    if (responseText.startsWith('YES')) {
-      return { matchesEmotion: true };
-    } else {
-      const parts = responseText.split('\n');
-      const suggestion = parts.length > 1 ? parts.slice(1).join(' ').trim() : "Try adjusting your expression.";
-      return { matchesEmotion: false, suggestion };
-    }
+    const {output} = await prompt(input);
+    return output!;
   }
 );
