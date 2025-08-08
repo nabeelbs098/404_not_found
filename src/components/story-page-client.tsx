@@ -2,13 +2,13 @@
 
 import type { StoryPart } from '@/lib/story';
 import { emotionIcons } from '@/lib/story';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { handleCheckEmotion } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowRight, Loader2, Video, VideoOff } from 'lucide-react';
+import { ArrowRight, Loader2, VideoOff } from 'lucide-react';
 import EmojiRain from './emoji-rain';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -16,10 +16,63 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   const { toast } = useToast();
   const webcamRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const [isChecking, setIsChecking] = useState(false);
   const [checkResult, setCheckResult] = useState<'correct' | 'incorrect' | null>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | undefined>(undefined);
+
+  const stopChecking = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  const handleCheck = useCallback(async () => {
+    if (!webcamRef.current || !canvasRef.current || !webcamRef.current.srcObject || isChecking) {
+        return;
+    }
+
+    setIsChecking(true);
+
+    const video = webcamRef.current;
+    const canvas = canvasRef.current;
+    
+    // Ensure the video is playing before trying to capture
+    if (video.paused || video.ended || video.videoWidth === 0) {
+        setIsChecking(false);
+        return;
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d')?.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+    const photoDataUri = canvas.toDataURL('image/jpeg');
+
+    const result = await handleCheckEmotion({
+      photoDataUri,
+      targetEmotion: storyPart.emotion,
+    });
+
+    if (result.error) {
+      toast({
+        variant: 'destructive',
+        title: 'Analysis Failed',
+        description: result.error,
+      });
+      setCheckResult('incorrect');
+    } else if (result.matchesEmotion) {
+      setCheckResult('correct');
+      stopChecking(); // Stop checking once correct
+    } else {
+      setCheckResult('incorrect');
+    }
+
+    setIsChecking(false);
+  }, [storyPart.emotion, toast, isChecking]);
+
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -52,7 +105,9 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
 
     getCameraPermission();
 
+    // Cleanup function to stop camera and interval
     return () => {
+      stopChecking();
       if (webcamRef.current && webcamRef.current.srcObject) {
         const stream = webcamRef.current.srcObject as MediaStream;
         stream.getTracks().forEach(track => track.stop());
@@ -60,48 +115,16 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     };
   }, [toast]);
 
-  const handleCheck = async () => {
-    if (!webcamRef.current || !canvasRef.current || !webcamRef.current.srcObject) {
-        toast({
-            variant: 'destructive',
-            title: 'Camera Not Ready',
-            description: 'Please ensure camera access is enabled and try again.',
-        });
-        return;
+  useEffect(() => {
+    // Start automatic checking only when camera is ready and not already correct
+    if (hasCameraPermission && checkResult !== 'correct') {
+      stopChecking(); // Clear any existing interval
+      intervalRef.current = setInterval(handleCheck, 3000); // Check every 3 seconds
     }
-
-    setIsChecking(true);
-    setCheckResult(null);
-
-    const video = webcamRef.current;
-    const canvas = canvasRef.current;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d')?.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
-    const photoDataUri = canvas.toDataURL('image/jpeg');
-
-    const result = await handleCheckEmotion({
-      photoDataUri,
-      targetEmotion: storyPart.emotion,
-    });
-
-    if (result.error) {
-      toast({
-        variant: 'destructive',
-        title: 'Analysis Failed',
-        description: result.error,
-      });
-      setCheckResult('incorrect');
-    } else if (result.matchesEmotion) {
-      setCheckResult('correct');
-    } else {
-      setCheckResult('incorrect');
-    }
-
-    setIsChecking(false);
-  };
+    
+    // Cleanup on dependency change
+    return () => stopChecking();
+  }, [hasCameraPermission, checkResult, handleCheck]);
   
   const renderWebcamFeed = () => {
     return (
@@ -159,7 +182,8 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                         <div className="text-center space-y-2">
                            <h3 className="font-headline text-2xl text-primary-foreground/90">Your Turn</h3>
                            <p className="text-muted-foreground">Show me a <span className="font-bold text-primary">{storyPart.emotion}</span> face!</p>
-                           {checkResult === 'incorrect' && <p className="text-destructive font-semibold animate-shake">Not quite, try again!</p>}
+                           {isChecking && <div className="flex items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Checking...</div>}
+                           {checkResult === 'incorrect' && !isChecking && <p className="text-destructive font-semibold animate-shake">Not quite, let's try again.</p>}
                         </div>
                       )}
                     </CardContent>
@@ -179,7 +203,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                             className="w-full rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow duration-300"
                         >
                             {isChecking && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-                            {isChecking ? 'Analyzing...' : 'Check My Emotion'}
+                            {isChecking ? 'Analyzing...' : 'Check My Emotion Manually'}
                         </Button>
                     )}
                     </CardFooter>
