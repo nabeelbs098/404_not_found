@@ -10,6 +10,7 @@ import { handleCheckEmotion } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowRight, Loader2, VideoOff } from 'lucide-react';
 import EmojiRain from './emoji-rain';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function StoryPageClient({ storyPart }: { storyPart: StoryPart }) {
   const { toast } = useToast();
@@ -18,41 +19,45 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
 
   const [isChecking, setIsChecking] = useState(false);
   const [checkResult, setCheckResult] = useState<'correct' | 'incorrect' | null>(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [webcamState, setWebcamState] = useState<'loading' | 'active' | 'error' | 'denied'>('loading');
-  const [webcamError, setWebcamError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function setupWebcam() {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-          if (webcamRef.current) {
-            webcamRef.current.srcObject = stream;
-            setWebcamState('active');
-          }
-        } catch (err: any) {
-          if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-              setWebcamState('denied');
-              setWebcamError("Webcam access denied. Please enable it in your browser settings.");
-          } else {
-              setWebcamState('error');
-              setWebcamError('Could not access webcam. Please ensure it is not in use by another application.');
-          }
-        }
-      } else {
+    const getCameraPermission = async () => {
+      setWebcamState('loading');
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         setWebcamState('error');
-        setWebcamError('Your browser does not support webcam access.');
+        return;
       }
-    }
-    setupWebcam();
-    
-    return () => {
-        if (webcamRef.current && webcamRef.current.srcObject) {
-            const stream = webcamRef.current.srcObject as MediaStream;
-            stream.getTracks().forEach(track => track.stop());
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        setHasCameraPermission(true);
+        if (webcamRef.current) {
+          webcamRef.current.srcObject = stream;
         }
-    }
-  }, []);
+        setWebcamState('active');
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        setHasCameraPermission(false);
+        setWebcamState('denied');
+        toast({
+          variant: 'destructive',
+          title: 'Camera Access Denied',
+          description: 'Please enable camera permissions in your browser settings to use this app.',
+        });
+      }
+    };
+
+    getCameraPermission();
+
+    return () => {
+      if (webcamRef.current && webcamRef.current.srcObject) {
+        const stream = webcamRef.current.srcObject as MediaStream;
+        stream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [toast]);
 
   const handleCheck = async () => {
     if (!webcamRef.current || !canvasRef.current) return;
@@ -91,15 +96,26 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   };
   
   const renderWebcamFeed = () => {
-    switch(webcamState) {
-        case 'loading':
-            return <div className="aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
-        case 'denied':
-        case 'error':
-            return <div className="aspect-video bg-muted rounded-lg flex flex-col items-center justify-center text-center p-4"><VideoOff className="h-12 w-12 text-destructive mb-4" /><p className="font-semibold text-destructive">Webcam Error</p><p className="text-sm text-muted-foreground">{webcamError}</p></div>;
-        case 'active':
-            return <video ref={webcamRef} autoPlay playsInline muted className="w-full h-auto rounded-lg shadow-inner transform -scale-x-100" aria-label="Webcam feed"></video>;
+    if (webcamState === 'loading') {
+      return <div className="aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
     }
+
+    return (
+      <div className="relative w-full aspect-video">
+        <video ref={webcamRef} autoPlay playsInline muted className="w-full h-full rounded-lg shadow-inner transform -scale-x-100 object-cover" aria-label="Webcam feed"></video>
+        { !hasCameraPermission && (
+          <div className="absolute inset-0 bg-muted rounded-lg flex flex-col items-center justify-center text-center p-4">
+            <Alert variant="destructive">
+              <VideoOff className="h-4 w-4" />
+              <AlertTitle>Camera Access Required</AlertTitle>
+              <AlertDescription>
+                Please allow camera access to use this feature. You may need to grant permission in your browser settings.
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
+      </div>
+    );
   }
 
   const Icon = emotionIcons[storyPart.iconName];
@@ -148,7 +164,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                     ) : (
                         <Button
                             onClick={handleCheck}
-                            disabled={isChecking || webcamState !== 'active'}
+                            disabled={isChecking || !hasCameraPermission || webcamState !== 'active'}
                             size="lg"
                             className="w-full rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow duration-300"
                         >
