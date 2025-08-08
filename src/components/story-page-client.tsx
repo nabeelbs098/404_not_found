@@ -177,7 +177,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
             <Card className="w-full max-w-4xl mx-auto shadow-2xl bg-card/80 backdrop-blur-sm overflow-hidden">
             <div className="grid md:grid-cols-2 gap-0">
                 <div className="p-6 md:p-8 flex flex-col">
-                    <CardHeader className="p-0">
+                    <CardHeader className="p-4 rounded-lg bg-accent/10">
                         <div className="flex items-center gap-3 mb-4">
                             <Icon className="h-10 w-10 text-primary" />
                             <CardTitle className="font-headline text-3xl md:text-4xl">
