@@ -6,6 +6,7 @@ import { suggestMoodBooster, type SuggestMoodBoosterInput } from '@/ai/flows/sug
 
 interface CheckEmotionResult {
   matchesEmotion?: boolean;
+  suggestion?: string | null;
   error?: string;
 }
 

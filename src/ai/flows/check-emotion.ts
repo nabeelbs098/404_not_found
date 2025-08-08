@@ -24,6 +24,7 @@ export type CheckEmotionInput = z.infer<typeof CheckEmotionInputSchema>;
 
 const CheckEmotionOutputSchema = z.object({
   matchesEmotion: z.boolean().describe('Whether the user is expressing the target emotion.'),
+  suggestion: z.string().optional().describe("A helpful tip on how to better express the target emotion if it doesn't match. For example, 'Try smiling wider!' or 'Furrow your brow a bit more.'"),
 });
 export type CheckEmotionOutput = z.infer<typeof CheckEmotionOutputSchema>;
 
@@ -35,14 +36,16 @@ const prompt = ai.definePrompt({
   name: 'checkEmotionPrompt',
   input: {schema: CheckEmotionInputSchema},
   output: {schema: CheckEmotionOutputSchema},
-  prompt: `You are an emotion recognition expert. You will be given an image of a user's face and a target emotion.
+  prompt: `You are an expert in facial expressions. You will be given an image of a user's face and a target emotion.
 
 You must determine if the user is expressing the target emotion in the image.
 
+If their expression does NOT match the target emotion, you must provide a short, friendly, and actionable suggestion to help them adjust their face. For example, if the target is 'happy', suggest 'How about a bigger smile?'. If the target is 'angry', suggest 'Try furrowing your brow a little.'
+
+If their expression DOES match, do not provide a suggestion.
+
 Target Emotion: {{{targetEmotion}}}
 User's Face: {{media url=photoDataUri}}
-
-Analyze the user's face and determine if it matches the target emotion.
 `,
 });
 

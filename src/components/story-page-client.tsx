@@ -6,9 +6,9 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { handleCheckEmotion, handleSuggestMoodBooster } from '@/app/actions';
+import { handleCheckEmotion } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowRight, Loader2, VideoOff, WandSparkles } from 'lucide-react';
+import { ArrowRight, Loader2, VideoOff, WandSparkles, Lightbulb } from 'lucide-react';
 import EmojiRain from './emoji-rain';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -21,7 +21,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   const [isChecking, setIsChecking] = useState(false);
   const [checkResult, setCheckResult] = useState<'correct' | 'incorrect' | null>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | undefined>(undefined);
-  const [moodSuggestion, setMoodSuggestion] = useState<string | null>(null);
+  const [expressionSuggestion, setExpressionSuggestion] = useState<string | null>(null);
 
   const stopChecking = () => {
     if (intervalRef.current) {
@@ -36,7 +36,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     }
 
     setIsChecking(true);
-    setMoodSuggestion(null);
+    setExpressionSuggestion(null);
 
     const video = webcamRef.current;
     const canvas = canvasRef.current;
@@ -69,10 +69,8 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
       stopChecking();
     } else {
       setCheckResult('incorrect');
-      // If the emotion is incorrect, let's check for a mood booster suggestion.
-      const moodResult = await handleSuggestMoodBooster({ photoDataUri });
-      if (moodResult.suggestion) {
-        setMoodSuggestion(moodResult.suggestion);
+      if (result.suggestion) {
+        setExpressionSuggestion(result.suggestion);
       }
     }
 
@@ -186,13 +184,13 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                            <h3 className="font-headline text-2xl text-primary-foreground/90">Your Turn</h3>
                            <p className="text-muted-foreground">Show me a <span className="font-bold text-primary">{storyPart.emotion}</span> face!</p>
                            {isChecking && <div className="flex items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Checking...</div>}
-                           {checkResult === 'incorrect' && !isChecking && !moodSuggestion && <p className="text-destructive font-semibold animate-shake">Not quite, let's try again.</p>}
+                           {checkResult === 'incorrect' && !isChecking && !expressionSuggestion && <p className="text-destructive font-semibold animate-shake">Not quite, let's try again.</p>}
                         </div>
                       )}
-                       {moodSuggestion && checkResult !== 'correct' && (
-                            <div className="bg-accent/20 p-4 rounded-lg mt-4 animate-fade-in-up">
-                                <p className="font-headline text-lg text-accent font-bold flex items-center justify-center gap-2"><WandSparkles className="h-5 w-5"/> A little suggestion:</p>
-                                <p className="text-foreground/80 mt-2 text-center">{moodSuggestion}</p>
+                       {expressionSuggestion && checkResult !== 'correct' && (
+                            <div className="bg-primary/20 p-4 rounded-lg mt-4 animate-fade-in-up">
+                                <p className="font-headline text-lg text-primary font-bold flex items-center justify-center gap-2"><Lightbulb className="h-5 w-5"/> Here's a tip:</p>
+                                <p className="text-foreground/80 mt-2 text-center">{expressionSuggestion}</p>
                             </div>
                         )}
                     </CardContent>
