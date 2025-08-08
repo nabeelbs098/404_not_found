@@ -28,7 +28,7 @@ export const story: Record<Emotion, StoryPart> = {
   sad: {
     emotion: 'sad',
     title: "ഒന്നും നോക്കണ്ട കരഞ്ഞോ..",
-    text: "Days turned into weeks, but the seed remained dormant under the dry earth. It felt a deep sadness, longing for a single drop of rain to quench its thirst.",
+    text: "അമൃത: (കരഞ്ഞുകൊണ്ട്) ഏട്ടൻ തന്നെയല്ലേ പറഞ്ഞത് ഇതിൽ നിറയെ അഴുക്കാണെന്ന്... ഞാൻ വൃത്തിയാക്കിയതാ...",
     iconName: 'sad',
     next: 'surprised',
     emoji: '😢',
