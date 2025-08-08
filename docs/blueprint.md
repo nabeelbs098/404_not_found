@@ -1,4 +1,4 @@
-# **App Name**: EmotiScroll
+# **App Name**: അഭിനയിച്ചു വായിക്കാം- Drama overload edition😝👯🏻‍♀
 
 ## Core Features:
 

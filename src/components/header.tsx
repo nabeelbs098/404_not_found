@@ -8,7 +8,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2 group">
           <EmotiScrollLogo className="h-8 w-8 text-primary transition-transform duration-300 group-hover:scale-110" />
           <span className="font-headline text-2xl font-bold tracking-tight text-foreground">
-            EmotiScroll
+            അഭിനയിച്ചു വായിക്കാം- Drama overload edition😝👯🏻‍♀
           </span>
         </Link>
       </div>
