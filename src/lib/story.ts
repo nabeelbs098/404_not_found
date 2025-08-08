@@ -16,7 +16,7 @@ export interface StoryPart {
 export const story: Record<Emotion, StoryPart> = {
   happy: {
     emotion: 'happy',
-    title: "A Happy Start",
+    title: "സന്തോഷിക്കെടാ കുട്ടാ...",
     text: "The sun peeked through the clouds, casting a warm glow. A tiny seed, nestled in the soil, felt a surge of joy. It dreamed of the flower it would one day become.",
     iconName: 'happy',
     next: 'sad',
@@ -25,7 +25,7 @@ export const story: Record<Emotion, StoryPart> = {
   },
   sad: {
     emotion: 'sad',
-    title: "A Long Wait",
+    title: "ഒന്നും നോക്കണ്ട കരഞ്ഞോ..",
     text: "Days turned into weeks, but the seed remained dormant under the dry earth. It felt a deep sadness, longing for a single drop of rain to quench its thirst.",
     iconName: 'sad',
     next: 'surprised',
@@ -34,7 +34,7 @@ export const story: Record<Emotion, StoryPart> = {
   },
   surprised: {
     emotion: 'surprised',
-    title: "A Sudden Gift",
+    title: "അപ്രതീക്ഷിത സമ്മാനം",
     text: "Suddenly, a gentle pitter-patter! The seed looked up in surprise. Rain! A tiny sprout burst forth, its leaves unfurling in astonishment at the wide, wet world.",
     iconName: 'surprised',
     next: 'angry',
@@ -43,7 +43,7 @@ export const story: Record<Emotion, StoryPart> = {
   },
   angry: {
     emotion: 'angry',
-    title: "A Fierce Trial",
+    title: "കഠിനമായ പരീക്ഷണം",
     text: "But the sky darkened. A fierce storm rolled in, its thunderous roar and lashing winds shaking the little sprout. It clenched its leaves, angry at the storm's fury.",
     iconName: 'angry',
     next: 'joy',
@@ -52,7 +52,7 @@ export const story: Record<Emotion, StoryPart> = {
   },
   joy: {
     emotion: 'joy',
-    title: "A Triumphant Bloom",
+    title: "വിജയകരമായ പൂവ്",
     text: "The sprout held on. As the storm passed, a rainbow arched across the sky. Bathed in its colors, the sprout grew into a magnificent flower, bursting with pure joy.",
     iconName: 'joy',
     next: '/complete',
