@@ -7,7 +7,7 @@ export function Header() {
       <div className="container mx-auto flex items-center justify-center sm:justify-start">
         <Link href="/" className="flex items-center gap-2 group">
           <EmotiScrollLogo className="h-8 w-8 text-primary transition-transform duration-300 group-hover:scale-110" />
-          <span className="font-headline text-2xl font-bold tracking-tight text-foreground">
+          <span className="font-headline text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             അഭിനയിച്ചു വായിക്കാം- Drama overload edition😝👯🏻‍♀
           </span>
         </Link>
