@@ -5,6 +5,7 @@ import type { StoryPart } from '@/lib/story';
 import { emotionIcons } from '@/lib/story';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { handleCheckEmotion } from '@/app/actions';
@@ -15,6 +16,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function StoryPageClient({ storyPart }: { storyPart: StoryPart }) {
   const { toast } = useToast();
+  const router = useRouter();
   const webcamRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -130,6 +132,16 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     
     return () => stopChecking();
   }, [hasCameraPermission, checkResult, handleCheck]);
+
+  useEffect(() => {
+    if (checkResult === 'correct') {
+      const timer = setTimeout(() => {
+        router.push(storyPart.next);
+      }, 2000); // 2-second delay before navigating
+
+      return () => clearTimeout(timer); // Cleanup timer on component unmount
+    }
+  }, [checkResult, router, storyPart.next]);
   
   const renderWebcamFeed = () => {
     return (
@@ -207,11 +219,9 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                     </CardContent>
                     <CardFooter className="p-0 mt-6">
                     {checkResult === 'correct' ? (
-                        <Button asChild size="lg" className="w-full rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow duration-300 bg-accent hover:bg-accent/90">
-                            <Link href={storyPart.next}>
-                            Next Chapter
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                            </Link>
+                        <Button disabled size="lg" className="w-full rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow duration-300 bg-accent hover:bg-accent/90">
+                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            Loading Next Chapter...
                         </Button>
                     ) : (
                         <Button
