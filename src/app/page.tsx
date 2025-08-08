@@ -1,36 +1,48 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Wand } from 'lucide-react';
+import { storyOrder } from '@/lib/story';
 
 export default function Home() {
+  const firstEmotion = storyOrder[0];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-background to-accent/50">
-      <div className="flex flex-col items-center text-center max-w-2xl">
-        <Card className="w-full shadow-2xl animate-fade-in-up">
+    <div className="container mx-auto px-4 py-8 sm:py-16 flex items-center justify-center min-h-full">
+      <div className="w-full max-w-2xl text-center">
+        <Card className="shadow-2xl bg-card/80 backdrop-blur-sm animate-fade-in-up">
           <CardHeader>
-            <CardTitle className="text-5xl font-headline tracking-tight">
-              Welcome to EmotiScroll
+            <CardTitle className="font-headline text-5xl md:text-6xl tracking-tighter bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent pb-2">
+              The Scroll of Feelings
             </CardTitle>
-            <CardDescription className="text-lg pt-2">
-              An interactive journey powered by your feelings.
+            <CardDescription className="font-body text-lg md:text-xl text-muted-foreground pt-2">
+              An interactive tale that unfolds with your expressions.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <p className="text-muted-foreground">
-              "The Scroll of Feelings" is a unique story that unfolds as you do. Using your webcam, we'll guide you through a tale where your own facial expressions unlock the next chapter. Mimic the required emotion to proceed.
+          <CardContent className="space-y-6 px-8 pb-8">
+            <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
+              Welcome to EmotiScroll, a unique storytelling experience. To journey through our narrative, you'll use your webcam and the power of your emotions.
             </p>
-            <p className="font-semibold text-primary">
-              Ready to feel your way through the story?
+            <p className="text-base md:text-lg text-foreground/80 leading-relaxed">
+              Each part of the story requires you to mirror an emotion. Match the feeling, and the scroll will move forward. Are you ready to begin?
             </p>
-            <Button asChild size="lg" className="group">
-              <Link href="/emotion/happy">
-                Start Your Journey <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
+            <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <Link href={`/story/${firstEmotion}`}>
+                  Start the Journey
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <Link href="/mood-booster">
+                  Mood Booster
+                  <Wand className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
-    </main>
+    </div>
   );
 }

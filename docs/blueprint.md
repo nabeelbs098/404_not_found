@@ -2,20 +2,18 @@
 
 ## Core Features:
 
-- Homepage: Landing page with a brief explanation of the concept.
-- Emotion Detection: Webcam emotion recognition using AI to analyze user's facial expressions.
-- Emotion Prompts: Sequential emotion challenges, each prompting the user to mimic a specific emotion.
-- Emotion Matching: Real-time feedback, where a tool assesses if the user's expression matches the target emotion.
-- Interactive Story: Story snippets, with background effects triggered by the current target emotion (e.g., emoji rain for happiness).
-- Emotion-Controlled Scrolling: Page scrolling that only occurs when the correct emotion is mimicked and recognized.
-- Completion Page: Celebratory congratulations page upon successful completion of all emotion challenges.
+- Introduction Page: Landing page with a brief explanation of the website and how to use it, with a clear call-to-action to start the emotion-mimicking journey.
+- Emotion Recognition: Emotion detection through webcam feed; uses a tool that processes the user's facial expressions to determine if it matches the target emotion.
+- Narrative Progression: Progressive story-telling; the story unfolds gradually with each correctly mimicked emotion. 
+- Emotion Prompt: Target emotion indicator; prominently displays the emotion the user needs to mimic on each page.
+- Visual Feedback: Emotion-themed visual effects (emoji rain, color filters, etc.) triggered upon correctly mimicking the emotion, offering immediate positive feedback.
+- Completion Page: Congratulatory end-page shown after successful completion of all emotion challenges, offering a satisfying conclusion.
 
 ## Style Guidelines:
 
-- Primary color: Soft lavender (#E6E6FA), a calming and slightly mysterious color to evoke a sense of emotional exploration. The exploration suggested by the project lead us to prefer an exploratory color like purple.
-- Background color: Light grey (#F0F0F0), providing a neutral backdrop that doesn't distract from the emotions being displayed and detected.
-- Accent color: Muted pink (#D8BFD8), to add a touch of warmth without overpowering the design; analogous to lavender, with slightly different brightness/saturation.
-- Body and headline font: 'PT Sans', a humanist sans-serif, to offer a balance of approachability and legibility.
-- Use simple, expressive icons related to emotions to enhance user understanding (e.g., smiling face for 'happy').
-- Clean and intuitive layout to focus the user's attention on the emotion prompts and the webcam feed.
-- Subtle, emotion-based animations (e.g., gentle swaying or shimmering) for feedback and immersion.
+- Primary color: A gentle, inviting violet (#BAA0E0) that evokes calmness and receptivity to emotional expression.
+- Background color: A very light lavender (#F0EDF5), offering a subtle contrast to the content while keeping the overall feel light.
+- Accent color: A warm, energetic orange (#E0B060) used for highlighting interactive elements and indicating emotional successes.
+- Font pairing: 'Literata' (serif) for body text, lending a storytelling, narrative feel, paired with 'PT Sans' (sans-serif) for headers and UI elements, providing clarity and modernity.
+- Emotion-based icons: Custom icons for each emotion that guide the user without text labels, with clear visual metaphors.
+- Fluid transitions between pages and subtle animations accompanying successful emotion recognition to immerse the user in a fluid, responsive emotional journey.

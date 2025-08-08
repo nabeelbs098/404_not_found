@@ -1,12 +1,7 @@
-import type { LucideProps } from 'lucide-react';
-import { Smile, Frown, Angry, Ghost } from 'lucide-react';
+import type { SVGProps } from "react";
 
-export const Icons = {
-  Smile: (props: LucideProps) => <Smile {...props} />,
-  Frown: (props: LucideProps) => <Frown {...props} />,
-  Angry: (props: LucideProps) => <Angry {...props} />,
-  Ghost: (props: LucideProps) => <Ghost {...props} />,
-  Surprised: (props: LucideProps) => (
+export function EmotiScrollLogo(props: SVGProps<SVGSVGElement>) {
+  return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -19,13 +14,12 @@ export const Icons = {
       strokeLinejoin="round"
       {...props}
     >
-      <title>Surprised Icon</title>
-      <circle cx="12" cy="12" r="10" />
-      <path d="M9 10h.01" />
-      <path d="M15 10h.01" />
-      <circle cx="12" cy="15" r="2" />
+      <path d="M10 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1" />
+      <path d="M14 21h-4" />
+      <path d="M14 3v4a2 2 0 0 0 2 2h4" />
+      <path d="M17.5 17a2.5 2.5 0 0 1-5 0" />
+      <path d="M15 14.5v-1" />
+      <path d="M20 14.5v-1" />
     </svg>
-  ),
-};
-
-export type IconName = keyof typeof Icons;
+  );
+}

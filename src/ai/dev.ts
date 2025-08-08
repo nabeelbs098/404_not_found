@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/analyze-emotion.ts';
-import '@/ai/flows/provide-emotion-feedback.ts';
+import '@/ai/flows/check-emotion.ts';
+import '@/ai/flows/suggest-mood-booster.ts';
