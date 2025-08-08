@@ -16,7 +16,11 @@ const CheckEmotionInputSchema = z.object({
   photoDataUri: z
     .string()
     .describe(
+<<<<<<< HEAD
       "A photo of the user's face, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'"
+=======
+      "A photo of the user's face, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+>>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
     ),
   targetEmotion: z.string().describe('The emotion the user is supposed to be mimicking.'),
 });
@@ -24,7 +28,10 @@ export type CheckEmotionInput = z.infer<typeof CheckEmotionInputSchema>;
 
 const CheckEmotionOutputSchema = z.object({
   matchesEmotion: z.boolean().describe('Whether the user is expressing the target emotion.'),
+<<<<<<< HEAD
   suggestion: z.string().optional().describe("A helpful tip on how to better express the target emotion if it doesn't match. For example, 'Try smiling wider!' or 'Furrow your brow a bit more.'"),
+=======
+>>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
 });
 export type CheckEmotionOutput = z.infer<typeof CheckEmotionOutputSchema>;
 
@@ -36,6 +43,7 @@ const prompt = ai.definePrompt({
   name: 'checkEmotionPrompt',
   input: {schema: CheckEmotionInputSchema},
   output: {schema: CheckEmotionOutputSchema},
+<<<<<<< HEAD
   prompt: `You are an expert acting coach. Your task is to analyze an image of a user's face and determine if their expression matches a specific target emotion.
 
 - Focus solely on the user's facial expression.
@@ -47,6 +55,16 @@ Return a JSON object with 'matchesEmotion' set to true or false.
 
 Intended Emotion: {{{targetEmotion}}}
 Performer's Face: {{media url=photoDataUri}}
+=======
+  prompt: `You are an emotion recognition expert. You will be given an image of a user's face and a target emotion.
+
+You must determine if the user is expressing the target emotion in the image.
+
+Target Emotion: {{{targetEmotion}}}
+User's Face: {{media url=photoDataUri}}
+
+Analyze the user's face and determine if it matches the target emotion.
+>>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
 `,
 });
 
