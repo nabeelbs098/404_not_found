@@ -1,47 +1,28 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
 'use client';
 
 import type { StoryPart } from '@/lib/story';
 import { emotionIcons } from '@/lib/story';
-<<<<<<< HEAD
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-=======
-import { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { handleCheckEmotion } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
-<<<<<<< HEAD
 import { ArrowRight, Loader2, VideoOff, Lightbulb, Radio } from 'lucide-react';
-=======
-import { ArrowRight, Loader2, Video, VideoOff } from 'lucide-react';
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
 import EmojiRain from './emoji-rain';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function StoryPageClient({ storyPart }: { storyPart: StoryPart }) {
   const { toast } = useToast();
-<<<<<<< HEAD
   const router = useRouter();
   const webcamRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-=======
-  const webcamRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
 
   const [isChecking, setIsChecking] = useState(false);
   const [checkResult, setCheckResult] = useState<'correct' | 'incorrect' | null>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | undefined>(undefined);
-<<<<<<< HEAD
   const [expressionSuggestion, setExpressionSuggestion] = useState<string | null>(null);
 
   const stopChecking = () => {
@@ -51,8 +32,8 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     }
   };
 
-  const handleCheck = useCallback(async () => {
-    if (!webcamRef.current || !canvasRef.current || !webcamRef.current.srcObject || isChecking) {
+  const handleCheck = useCallback(async (manual = false) => {
+    if (!webcamRef.current || !canvasRef.current || !webcamRef.current.srcObject || (isChecking && !manual)) {
         return;
     }
 
@@ -101,8 +82,6 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     setIsChecking(false);
   }, [storyPart.emotion, toast, isChecking]);
 
-=======
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -136,10 +115,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     getCameraPermission();
 
     return () => {
-<<<<<<< HEAD
       stopChecking();
-=======
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
       if (webcamRef.current && webcamRef.current.srcObject) {
         const stream = webcamRef.current.srcObject as MediaStream;
         stream.getTracks().forEach(track => track.stop());
@@ -147,11 +123,10 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     };
   }, [toast]);
 
-<<<<<<< HEAD
   useEffect(() => {
     if (hasCameraPermission && checkResult !== 'correct') {
       stopChecking(); 
-      intervalRef.current = setInterval(handleCheck, 2000); // Check every 2 seconds
+      intervalRef.current = setInterval(() => handleCheck(false), 2000); // Check every 2 seconds
     }
     
     return () => stopChecking();
@@ -166,50 +141,6 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
       return () => clearTimeout(timer); // Cleanup timer on component unmount
     }
   }, [checkResult, router, storyPart.next]);
-=======
-  const handleCheck = async () => {
-    if (!webcamRef.current || !canvasRef.current || !webcamRef.current.srcObject) {
-        toast({
-            variant: 'destructive',
-            title: 'Camera Not Ready',
-            description: 'Please ensure camera access is enabled and try again.',
-        });
-        return;
-    }
-
-    setIsChecking(true);
-    setCheckResult(null);
-
-    const video = webcamRef.current;
-    const canvas = canvasRef.current;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d')?.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
-    const photoDataUri = canvas.toDataURL('image/jpeg');
-
-    const result = await handleCheckEmotion({
-      photoDataUri,
-      targetEmotion: storyPart.emotion,
-    });
-
-    if (result.error) {
-      toast({
-        variant: 'destructive',
-        title: 'Analysis Failed',
-        description: result.error,
-      });
-      setCheckResult('incorrect');
-    } else if (result.matchesEmotion) {
-      setCheckResult('correct');
-    } else {
-      setCheckResult('incorrect');
-    }
-
-    setIsChecking(false);
-  };
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
   
   const renderWebcamFeed = () => {
     return (
@@ -264,7 +195,6 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                             <p>You've matched the emotion. The story continues...</p>
                         </div>
                       ) : (
-<<<<<<< HEAD
                         <div className="space-y-4">
                            <div className="text-center">
                              <h3 className="font-headline text-2xl text-primary-foreground/90">Your Turn</h3>
@@ -283,45 +213,25 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                                   </p>
                                 )}
                             </div>
-=======
-                        <div className="text-center space-y-2">
-                           <h3 className="font-headline text-2xl text-primary-foreground/90">Your Turn</h3>
-                           <p className="text-muted-foreground">Show me a <span className="font-bold text-primary">{storyPart.emotion}</span> face!</p>
-                           {checkResult === 'incorrect' && <p className="text-destructive font-semibold animate-shake">Not quite, try again!</p>}
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
                         </div>
                       )}
                     </CardContent>
                     <CardFooter className="p-0 mt-6">
                     {checkResult === 'correct' ? (
-<<<<<<< HEAD
                         <Button disabled size="lg" className="w-full rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow duration-300 bg-accent hover:bg-accent/90">
                             <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                             Loading Next Chapter...
-=======
-                        <Button asChild size="lg" className="w-full rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow duration-300 bg-accent hover:bg-accent/90">
-                            <Link href={storyPart.next}>
-                            Next Chapter
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                            </Link>
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
                         </Button>
                     ) : (
                         <Button
-                            onClick={handleCheck}
+                            onClick={() => handleCheck(true)}
                             disabled={isChecking || !hasCameraPermission}
                             size="lg"
                             className="w-full rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow duration-300"
-<<<<<<< HEAD
                             variant="outline"
                         >
                             {isChecking && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
                             Check Manually
-=======
-                        >
-                            {isChecking && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-                            {isChecking ? 'Analyzing...' : 'Check My Emotion'}
->>>>>>> d9d7f407c9cea52721995ebcd476129959a23593
                         </Button>
                     )}
                     </CardFooter>
