@@ -37,7 +37,7 @@ export const story: Record<Emotion, StoryPart> = {
   surprised: {
     emotion: 'surprised',
     title: "അപ്രതീക്ഷിത സമ്മാനം",
-    text: "Suddenly, a gentle pitter-patter! The seed looked up in surprise. Rain! A tiny sprout burst forth, its leaves unfurling in astonishment at the wide, wet world.",
+    text: `അർജുൻ: എന്താ... എന്താ അമ്മേ ഇവിടെയൊരു ബഹളം? (വെള്ളത്തിൽ കിടക്കുന്ന ലാപ്ടോപ്പ് കണ്ട് ഞെട്ടുന്നു) അമൃതാ!!! നീയെന്താ ഈ ചെയ്തത്?`,
     iconName: 'surprised',
     next: 'angry',
     emoji: '😮',
