@@ -180,8 +180,8 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                     <CardHeader className="p-0">
                         <div className="flex items-center gap-3 mb-4">
                             <Icon className="h-10 w-10 text-primary" />
-                            <CardTitle className="font-headline text-3xl md:text-4xl capitalize">
-                                Chapter: {storyPart.emotion}
+                            <CardTitle className="font-headline text-3xl md:text-4xl">
+                                {storyPart.title}
                             </CardTitle>
                         </div>
                         <CardDescription className="font-body text-lg text-foreground/80 leading-relaxed">
