@@ -6,9 +6,9 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { handleCheckEmotion } from '@/app/actions';
+import { handleCheckEmotion, handleSuggestMoodBooster } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowRight, Loader2, VideoOff } from 'lucide-react';
+import { ArrowRight, Loader2, VideoOff, WandSparkles } from 'lucide-react';
 import EmojiRain from './emoji-rain';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -21,6 +21,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   const [isChecking, setIsChecking] = useState(false);
   const [checkResult, setCheckResult] = useState<'correct' | 'incorrect' | null>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | undefined>(undefined);
+  const [moodSuggestion, setMoodSuggestion] = useState<string | null>(null);
 
   const stopChecking = () => {
     if (intervalRef.current) {
@@ -35,11 +36,11 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     }
 
     setIsChecking(true);
+    setMoodSuggestion(null);
 
     const video = webcamRef.current;
     const canvas = canvasRef.current;
     
-    // Ensure the video is playing before trying to capture
     if (video.paused || video.ended || video.videoWidth === 0) {
         setIsChecking(false);
         return;
@@ -65,9 +66,14 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
       setCheckResult('incorrect');
     } else if (result.matchesEmotion) {
       setCheckResult('correct');
-      stopChecking(); // Stop checking once correct
+      stopChecking();
     } else {
       setCheckResult('incorrect');
+      // If the emotion is incorrect, let's check for a mood booster suggestion.
+      const moodResult = await handleSuggestMoodBooster({ photoDataUri });
+      if (moodResult.suggestion) {
+        setMoodSuggestion(moodResult.suggestion);
+      }
     }
 
     setIsChecking(false);
@@ -105,7 +111,6 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
 
     getCameraPermission();
 
-    // Cleanup function to stop camera and interval
     return () => {
       stopChecking();
       if (webcamRef.current && webcamRef.current.srcObject) {
@@ -116,13 +121,11 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   }, [toast]);
 
   useEffect(() => {
-    // Start automatic checking only when camera is ready and not already correct
     if (hasCameraPermission && checkResult !== 'correct') {
-      stopChecking(); // Clear any existing interval
-      intervalRef.current = setInterval(handleCheck, 3000); // Check every 3 seconds
+      stopChecking(); 
+      intervalRef.current = setInterval(handleCheck, 3000);
     }
     
-    // Cleanup on dependency change
     return () => stopChecking();
   }, [hasCameraPermission, checkResult, handleCheck]);
   
@@ -183,9 +186,15 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                            <h3 className="font-headline text-2xl text-primary-foreground/90">Your Turn</h3>
                            <p className="text-muted-foreground">Show me a <span className="font-bold text-primary">{storyPart.emotion}</span> face!</p>
                            {isChecking && <div className="flex items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Checking...</div>}
-                           {checkResult === 'incorrect' && !isChecking && <p className="text-destructive font-semibold animate-shake">Not quite, let's try again.</p>}
+                           {checkResult === 'incorrect' && !isChecking && !moodSuggestion && <p className="text-destructive font-semibold animate-shake">Not quite, let's try again.</p>}
                         </div>
                       )}
+                       {moodSuggestion && checkResult !== 'correct' && (
+                            <div className="bg-accent/20 p-4 rounded-lg mt-4 animate-fade-in-up">
+                                <p className="font-headline text-lg text-accent font-bold flex items-center justify-center gap-2"><WandSparkles className="h-5 w-5"/> A little suggestion:</p>
+                                <p className="text-foreground/80 mt-2 text-center">{moodSuggestion}</p>
+                            </div>
+                        )}
                     </CardContent>
                     <CardFooter className="p-0 mt-6">
                     {checkResult === 'correct' ? (
