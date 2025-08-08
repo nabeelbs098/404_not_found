@@ -1,6 +1,7 @@
 'use client';
 
-import type { StoryPart } from '@/lib/story';
+import type { StoryPart, Emotion } from '@/lib/story';
+import { emotionIcons } from '@/lib/story';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -101,6 +102,8 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     }
   }
 
+  const Icon = emotionIcons[storyPart.iconName as Emotion];
+
   return (
     <>
       {checkResult === 'correct' && <EmojiRain emoji={storyPart.emoji} />}
@@ -111,7 +114,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                 <div className="p-6 md:p-8 flex flex-col">
                     <CardHeader className="p-0">
                         <div className="flex items-center gap-3 mb-4">
-                            <storyPart.Icon className="h-10 w-10 text-primary" />
+                            <Icon className="h-10 w-10 text-primary" />
                             <CardTitle className="font-headline text-3xl md:text-4xl capitalize">
                                 Chapter: {storyPart.emotion}
                             </CardTitle>

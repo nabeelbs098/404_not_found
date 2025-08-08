@@ -7,7 +7,7 @@ export interface StoryPart {
   emotion: Emotion;
   title: string;
   text: string;
-  Icon: LucideIcon;
+  iconName: Emotion;
   next: Emotion | '/complete';
   emoji: string;
   colorFilter: string;
@@ -18,7 +18,7 @@ export const story: Record<Emotion, StoryPart> = {
     emotion: 'happy',
     title: "A Happy Start",
     text: "The sun peeked through the clouds, casting a warm glow. A tiny seed, nestled in the soil, felt a surge of joy. It dreamed of the flower it would one day become.",
-    Icon: Smile,
+    iconName: 'happy',
     next: 'sad',
     emoji: '😊',
     colorFilter: 'sepia(30%) saturate(150%) brightness(105%)'
@@ -27,7 +27,7 @@ export const story: Record<Emotion, StoryPart> = {
     emotion: 'sad',
     title: "A Long Wait",
     text: "Days turned into weeks, but the seed remained dormant under the dry earth. It felt a deep sadness, longing for a single drop of rain to quench its thirst.",
-    Icon: Frown,
+    iconName: 'sad',
     next: 'surprised',
     emoji: '😢',
     colorFilter: 'grayscale(80%) brightness(90%)'
@@ -36,7 +36,7 @@ export const story: Record<Emotion, StoryPart> = {
     emotion: 'surprised',
     title: "A Sudden Gift",
     text: "Suddenly, a gentle pitter-patter! The seed looked up in surprise. Rain! A tiny sprout burst forth, its leaves unfurling in astonishment at the wide, wet world.",
-    Icon: Annoyed,
+    iconName: 'surprised',
     next: 'angry',
     emoji: '😮',
     colorFilter: 'contrast(120%)'
@@ -45,7 +45,7 @@ export const story: Record<Emotion, StoryPart> = {
     emotion: 'angry',
     title: "A Fierce Trial",
     text: "But the sky darkened. A fierce storm rolled in, its thunderous roar and lashing winds shaking the little sprout. It clenched its leaves, angry at the storm's fury.",
-    Icon: Angry,
+    iconName: 'angry',
     next: 'joy',
     emoji: '😠',
     colorFilter: 'hue-rotate(-20deg) saturate(200%) brightness(80%)'
@@ -54,7 +54,7 @@ export const story: Record<Emotion, StoryPart> = {
     emotion: 'joy',
     title: "A Triumphant Bloom",
     text: "The sprout held on. As the storm passed, a rainbow arched across the sky. Bathed in its colors, the sprout grew into a magnificent flower, bursting with pure joy.",
-    Icon: PartyPopper,
+    iconName: 'joy',
     next: '/complete',
     emoji: '🎉',
     colorFilter: 'saturate(200%) brightness(110%)'
@@ -62,3 +62,11 @@ export const story: Record<Emotion, StoryPart> = {
 };
 
 export const storyOrder: Emotion[] = ['happy', 'sad', 'surprised', 'angry', 'joy'];
+
+export const emotionIcons: Record<Emotion, LucideIcon> = {
+    happy: Smile,
+    sad: Frown,
+    surprised: Annoyed,
+    angry: Angry,
+    joy: PartyPopper
+};
