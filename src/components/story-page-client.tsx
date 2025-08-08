@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { handleCheckEmotion } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowRight, Loader2, VideoOff, AlertTriangle } from 'lucide-react';
+import { ArrowRight, Loader2, VideoOff } from 'lucide-react';
 import EmojiRain from './emoji-rain';
 
 export default function StoryPageClient({ storyPart }: { storyPart: StoryPart }) {
@@ -102,7 +102,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
     }
   }
 
-  const Icon = emotionIcons[storyPart.iconName as Emotion];
+  const Icon = emotionIcons[storyPart.iconName];
 
   return (
     <>
