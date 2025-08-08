@@ -198,7 +198,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
                         <div className="space-y-4">
                            <div className="text-center">
                              <h3 className="font-headline text-2xl text-primary-foreground/90">Your Turn</h3>
-                             <p className="text-muted-foreground">Show me a <span className="font-bold text-primary">{storyPart.emotion}</span> face!</p>
+                             <p className="text-muted-foreground">Show me a <span className="font-bold text-primary">{storyPart.malayalamEmotion}</span> face!</p>
                            </div>
                            
                             <div className="bg-primary/20 p-4 rounded-lg mt-4 animate-fade-in-up">
