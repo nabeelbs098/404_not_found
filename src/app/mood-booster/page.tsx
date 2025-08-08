@@ -15,28 +15,24 @@ export default function MoodBoosterPage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<{ emotion: string; suggestion?: string } | null>(null);
-  const [hasCameraPermission, setHasCameraPermission] = useState(false);
-  const [webcamState, setWebcamState] = useState<'loading' | 'active' | 'error' | 'denied'>('loading');
+  const [hasCameraPermission, setHasCameraPermission] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const getCameraPermission = async () => {
-      setWebcamState('loading');
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        setWebcamState('error');
+        console.error('Camera not supported');
+        setHasCameraPermission(false);
         return;
       }
-
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        setHasCameraPermission(true);
         if (webcamRef.current) {
           webcamRef.current.srcObject = stream;
         }
-        setWebcamState('active');
+        setHasCameraPermission(true);
       } catch (error) {
         console.error('Error accessing camera:', error);
         setHasCameraPermission(false);
-        setWebcamState('denied');
         toast({
           variant: 'destructive',
           title: 'Camera Access Denied',
@@ -90,10 +86,10 @@ export default function MoodBoosterPage() {
   }
 
   const renderWebcamFeed = () => {
-    if (webcamState === 'loading') {
+     if (hasCameraPermission === undefined) {
       return <div className="aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
     }
-
+    
     return (
       <div className="relative w-full aspect-video">
         <video ref={webcamRef} autoPlay playsInline muted className="w-full h-full rounded-lg shadow-inner transform -scale-x-100 object-cover" aria-label="Webcam feed"></video>
@@ -104,7 +100,7 @@ export default function MoodBoosterPage() {
               <AlertTitle>Camera Access Required</AlertTitle>
               <AlertDescription>
                 Please allow camera access to use this feature. You may need to grant permission in your browser settings.
-              </Aler_tDescription>
+              </AlertDescription>
             </Alert>
           </div>
         )}
@@ -157,7 +153,7 @@ export default function MoodBoosterPage() {
                 ) : (
                     <Button
                         onClick={handleCheck}
-                        disabled={isLoading || !hasCameraPermission || webcamState !== 'active'}
+                        disabled={isLoading || !hasCameraPermission}
                         size="lg"
                         className="w-full rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow duration-300"
                     >
