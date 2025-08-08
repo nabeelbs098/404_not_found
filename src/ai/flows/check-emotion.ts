@@ -35,14 +35,14 @@ const prompt = ai.definePrompt({
   name: 'checkEmotionPrompt',
   input: {schema: CheckEmotionInputSchema},
   output: {schema: CheckEmotionOutputSchema},
-  prompt: `You are an emotion recognition expert.  You will be given an image of a user's face and a target emotion.
+  prompt: `You are an emotion recognition expert. You will be given an image of a user's face and a target emotion.
 
 You must determine whether the user is expressing the target emotion in the image provided.
 
 Target Emotion: {{{targetEmotion}}}
 User's Face: {{media url=photoDataUri}}
 
-Respond with ONLY a boolean value, true if the user is expressing the target emotion, and false if not.`,
+Respond with ONLY the boolean value true if the user is expressing the target emotion, and false if not. Your entire response should be either 'true' or 'false' with no other text.`,
 });
 
 const checkEmotionFlow = ai.defineFlow(
@@ -53,7 +53,7 @@ const checkEmotionFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    // The prompt forces a boolean output but the return type is text, so convert the result to a boolean.
-    return {matchesEmotion: output!.toString().toLowerCase() === 'true'};
+    const result = output?.toString().toLowerCase().trim() === 'true';
+    return {matchesEmotion: result};
   }
 );
