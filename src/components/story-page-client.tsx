@@ -3,13 +3,12 @@
 import type { StoryPart } from '@/lib/story';
 import { emotionIcons } from '@/lib/story';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { handleCheckEmotion } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowRight, Loader2, VideoOff, Lightbulb, Radio } from 'lucide-react';
+import { Loader2, VideoOff, Lightbulb, Radio } from 'lucide-react';
 import EmojiRain from './emoji-rain';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
