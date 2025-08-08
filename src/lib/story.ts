@@ -45,7 +45,7 @@ export const story: Record<Emotion, StoryPart> = {
   angry: {
     emotion: 'angry',
     title: "കഠിനമായ പരീക്ഷണം",
-    text: `അർജുൻ: (ഭയത്തോടെ) എന്താ അമ്മേ? സാമ്പാറിന് എന്തുപറ്റി?`,
+    text: `AIzaSyAE3MRq7nCf368zOZsefSinJTF7PLo-eEM`,
     iconName: 'angry',
     next: 'joy',
     emoji: '😠',
