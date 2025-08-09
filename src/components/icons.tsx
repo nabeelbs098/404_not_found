@@ -14,12 +14,11 @@ export function EmotiScrollLogo(props: SVGProps<SVGSVGElement>) {
       strokeLinejoin="round"
       {...props}
     >
-      <path d="M10 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1" />
-      <path d="M14 21h-4" />
-      <path d="M14 3v4a2 2 0 0 0 2 2h4" />
-      <path d="M17.5 17a2.5 2.5 0 0 1-5 0" />
-      <path d="M15 14.5v-1" />
-      <path d="M20 14.5v-1" />
+      <path d="M2 6s1.5-2 5-2 5 2 5 2v14H2V6Z" />
+      <path d="M12 6s1.5-2 5-2 5 2 5 2v14h-5" />
+      <path d="M15 13.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+      <path d="M20 13.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+      <path d="M16 17.5c2.5 2.5 8 2.5 8 0" />
     </svg>
   );
 }
