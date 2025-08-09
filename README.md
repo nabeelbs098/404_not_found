@@ -1,34 +1,35 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# [EmoScroll] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [404_not_found]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: [Fousiya N] - [College of engineering perumon]
+- Member 2: [Nabeel BS] - [College of engineering perumon]
 
 ### Project Description
-[2-3 lines about what your project does]
+
+EmoScroll is an interactive novel reader that uses real-time webcam detection to automatically control story scrolling and display effects based on the story’s content. It also includes a mood tracker that predicts your current mood and suggests tips to improve it.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+People are lazy about scrolling pages during reading something.Instead of that ,this page will auto scroll based on reader's facial expression
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+
+An emotion-driven novel reader that makes your feelings the page-turner — scroll, react, and immerse yourself like never before 
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- Html,css,typescript
+- Next.js 15 with React 18
+- - [Libraries used]
+- AI and backend,UI and styling
 
 For Hardware:
 - [List main components]
