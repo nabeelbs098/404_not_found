@@ -26,7 +26,7 @@ export const story: Record<Emotion, StoryPart> = {
     next: 'angry',
     emoji: '😊',
     colorFilter: 'sepia(30%) saturate(150%) brightness(105%)',
-    audioSrc: 'https://cdn.pixabay.com/audio/2022/06/13/audio_40b2518e38.mp3'
+    audioSrc: 'https://cdn.pixabay.com/audio/2022/08/04/audio_2bbe6a63c6.mp3'
   },
   sad: {
     emotion: 'sad',
