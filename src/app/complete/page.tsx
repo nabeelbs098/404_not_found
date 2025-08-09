@@ -8,6 +8,7 @@ export default function CompletionPage() {
   return (
     <>
       <EmojiRain emoji="🎉" />
+      <audio src="https://cdn.pixabay.com/audio/2022/08/29/audio_368a865f3c.mp3" autoPlay loop controls className="hidden" />
       <div className="min-h-full w-full bg-gradient-to-br from-green-200/30 via-cyan-200/20 to-blue-300/30">
         <div className="container mx-auto px-4 py-8 sm:py-16 flex items-center justify-center min-h-full">
           <div className="w-full max-w-2xl text-center">

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { handleCheckEmotion } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, VideoOff, Lightbulb, Radio } from 'lucide-react';
+import { Loader2, VideoOff, Lightbulb, Radio, Music } from 'lucide-react';
 import EmojiRain from './emoji-rain';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -18,6 +18,7 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   const webcamRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const [isChecking, setIsChecking] = useState(false);
   const [checkResult, setCheckResult] = useState<'correct' | 'incorrect' | null>(null);
@@ -133,6 +134,9 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
 
   useEffect(() => {
     if (checkResult === 'correct') {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
       const timer = setTimeout(() => {
         router.push(storyPart.next);
       }, 2000); // 2-second delay before navigating
@@ -171,17 +175,24 @@ export default function StoryPageClient({ storyPart }: { storyPart: StoryPart })
   return (
     <>
       {checkResult === 'correct' && <EmojiRain emoji={storyPart.emoji} />}
+      <audio ref={audioRef} src={storyPart.audioSrc} autoPlay loop controls className="hidden" />
       <div className="container mx-auto px-4 py-8 flex justify-center animate-fade-in">
         <div style={{ filter: checkResult === 'correct' ? storyPart.colorFilter : 'none', transition: 'filter 1s ease-in-out' }} className="w-full">
             <Card className="w-full max-w-4xl mx-auto shadow-2xl bg-card/80 backdrop-blur-sm overflow-hidden">
             <div className="grid md:grid-cols-2 gap-0">
                 <div className="p-6 md:p-8 flex flex-col">
                     <CardHeader className="p-4 rounded-lg bg-accent/10">
-                        <div className="flex items-center gap-3 mb-4">
-                            <Icon className="h-10 w-10 text-primary" />
-                            <CardTitle className="font-headline text-2xl text-accent">
-                                {storyPart.title}
-                            </CardTitle>
+                        <div className="flex items-center justify-between gap-3 mb-4">
+                            <div className="flex items-center gap-3">
+                                <Icon className="h-10 w-10 text-primary" />
+                                <CardTitle className="font-headline text-2xl text-accent">
+                                    {storyPart.title}
+                                </CardTitle>
+                            </div>
+                            <div className="flex items-center gap-2 text-muted-foreground">
+                                <Music className="h-4 w-4" />
+                                <span className="text-xs font-mono">ON</span>
+                            </div>
                         </div>
                         <CardDescription className="font-body text-lg text-foreground/80 leading-relaxed">
                             {storyPart.text}
