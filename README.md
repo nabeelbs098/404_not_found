@@ -40,18 +40,18 @@ For Hardware:
 For Software:
 ## Installation
 
-git clone <repo-url> </br> 
-cd nextn
+git clone (https://github.com/nabeelbs098/404_not_found.git) </br> 
+cd 404_not_found </br>
 npm install
 
 ## Run Development Server:
 
-npm run dev
+npm run dev </br>
 Runs the Next.js app with turbopack on port 9002.
 
 ## Build for Production:
 
-npm run build
+npm run build </br>
 npm run start
 
 ### Project Documentation
