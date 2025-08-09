@@ -12,7 +12,6 @@ export interface StoryPart {
   next: Emotion | '/complete';
   emoji: string;
   colorFilter: string;
-  audioSrc: string;
 }
 
 export const story: Record<Emotion, StoryPart> = {
@@ -26,7 +25,6 @@ export const story: Record<Emotion, StoryPart> = {
     next: 'angry',
     emoji: '😊',
     colorFilter: 'sepia(30%) saturate(150%) brightness(105%)',
-    audioSrc: 'https://cdn.pixabay.com/audio/2022/08/04/audio_2bbe6a63c6.mp3'
   },
   sad: {
     emotion: 'sad',
@@ -37,7 +35,6 @@ export const story: Record<Emotion, StoryPart> = {
     next: 'joy',
     emoji: '😢',
     colorFilter: 'grayscale(80%) brightness(90%)',
-    audioSrc: 'https://cdn.pixabay.com/audio/2022/02/21/audio_a124c62c64.mp3'
   },
   surprised: {
     emotion: 'surprised',
@@ -48,7 +45,6 @@ export const story: Record<Emotion, StoryPart> = {
     next: 'sad',
     emoji: '😮',
     colorFilter: 'contrast(120%)',
-    audioSrc: 'https://cdn.pixabay.com/audio/2022/03/24/audio_7380a133e9.mp3'
   },
   angry: {
     emotion: 'angry',
@@ -59,7 +55,6 @@ export const story: Record<Emotion, StoryPart> = {
     next: 'surprised',
     emoji: '😠',
     colorFilter: 'hue-rotate(-20deg) saturate(200%) brightness(80%)',
-    audioSrc: 'https://cdn.pixabay.com/audio/2023/07/20/audio_03d9e07f9c.mp3'
   },
   joy: {
     emotion: 'joy',
@@ -72,7 +67,6 @@ export const story: Record<Emotion, StoryPart> = {
     next: '/complete',
     emoji: '🎉',
     colorFilter: 'saturate(200%) brightness(110%)',
-    audioSrc: 'https://cdn.pixabay.com/audio/2024/02/09/audio_65b38f8709.mp3'
   }
 };
 
