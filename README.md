@@ -48,14 +48,19 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![WhatsApp Image 2025-08-09 at 07 28 52_5e3d1030](https://github.com/user-attachments/assets/e4800a28-bcec-4438-b17e-b9c4210e7564)
 
-![Screenshot2](Add screenshot 2 here with proper name)
 *Add caption explaining what this shows*
+"Emoscroll 2.0 - An interactive tale that unfolds with your expressions.
+Explore a unique story experience where your facial expressions influence the narrative flow, creating a fun and engaging journey. Ready to start reading and boost your mood?"
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+
+![WhatsApp Image 2025-08-09 at 07 40 01_f713ef87](https://github.com/user-attachments/assets/91b794df-6a61-4e3c-b376-87dcd0d087c6)
+"Emoscroll 2.0: An interactive novel reader that uses real-time webcam-based emotion detection to enhance storytelling by reacting to the reader's emotions."*
+
+![WhatsApp Image 2025-08-09 at 07 40 01_dd3acf86](https://github.com/user-attachments/assets/22ea2cfd-c312-4c50-883a-2c1aa3760e31)
+autoscroll
+automatically scroll pages by detecting facial expressions
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)
