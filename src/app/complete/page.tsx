@@ -24,7 +24,7 @@ export default function CompletionPage() {
               </CardHeader>
               <CardContent className="space-y-6 px-8 pb-8">
                 <p className="text-base md:text-lg text-foreground/80 leading-relaxed font-bold">
-                  നീ തങ്കപ്പനല്ലടാ, പൊന്നപ്പനാ പൊന്നപ്പൻ...
+                  നീ പൊന്നപ്പനല്ലടാ തങ്കപ്പനാ തങ്കപ്പൻ
                 </p>
                 <p className="text-base md:text-lg text-foreground/80 leading-relaxed font-bold">
                   അമൃതയ്‌ക്കൊപ്പം കരഞ്ഞും, ഊർമിള ദേവിക്കൊപ്പം ദേഷ്യപ്പെട്ടും അർജുനൊപ്പം ഞെട്ടിയും നിങ്ങൾ ചന്ദനമഴ വിജയകരമായി വായിച്ചു പൂർത്തിയാക്കിയിരിക്കുന്നു..
