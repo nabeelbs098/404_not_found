@@ -86,6 +86,7 @@ automatically scroll pages by detecting facial expressions
 
 ## Team Contributions
 - Fousiya N: Project lead, emotion detection integration, UI design, Next.js setup
+- 
 Nabeel BS: Backend support, AI integration, testing, documentation
 
 
