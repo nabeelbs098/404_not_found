@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Header } from '@/components/header';
 
 export const metadata: Metadata = {
-  title: 'അഭിനയിച്ചു വായിക്കാം- Drama overload edition😝👯🏻‍♀',
+  title: 'Emoscroll 2.0',
   description: 'An interactive story powered by your emotions.',
 };
 
