@@ -79,7 +79,34 @@ automatically scroll pages by detecting facial expressions
 ### Project Demo
 # Video
 
-*Explain what the video demonstrates*
+https://drive.google.com/file/d/1hEZ1LNEAy-HuEIJV8D3akZ3shWiA3_4c/view?usp=sharing
+An interactive novel reader that uses your webcam to detect your facial emotions in real time and automatically scrolls the story based on how you feel, making the reading experience more immersive and personalized.
+How It Works:
+Webcam Access:
+The app activates your webcam (with permission) and continuously analyzes your facial expressions.
+
+Emotion Detection:
+Using a lightweight machine learning model (like face-api.js), the app detects emotions such as happy, sad, angry, surprised, neutral, etc.
+
+Scroll Control:
+The scrolling speed or effect on the story changes depending on the detected emotion. For example:
+
+Happy: Scrolls faster, bright background colors, cheerful animations.
+
+Sad: Scrolls slower, dimmed or blue-ish tones, calm mood effects.
+
+Angry: Faster scroll with red highlights or shaking effects.
+
+Neutral: Normal scroll speed with plain background.
+
+Mood-Based Effects:
+Beyond scrolling, the app could change fonts, colors, or add subtle animations to match your mood and the story content.
+
+Mood Tracker & Suggestions:
+Optionally, track your mood trends while reading and suggest uplifting tips or stories based on your emotional state.
+
+
+
 
 # Additional Demos
 [Add any extra demo materials/links]
