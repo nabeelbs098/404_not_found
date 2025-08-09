@@ -30,7 +30,7 @@ export default function Home() {
               <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <Link href={`/story/${firstEmotion}`}>
-                    Start the Journey
+                    വായിച്ചുതുടങ്ങാം
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
