@@ -38,11 +38,21 @@ For Hardware:
 
 ### Implementation
 For Software:
-# Installation
-[commands]
+## Installation
 
-# Run
-[commands]
+git clone <repo-url> </br> 
+cd nextn
+npm install
+
+## Run Development Server:
+
+npm run dev
+Runs the Next.js app with turbopack on port 9002.
+
+## Build for Production:
+
+npm run build
+npm run start
 
 ### Project Documentation
 For Software:
